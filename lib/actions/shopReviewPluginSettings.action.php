@@ -2,8 +2,8 @@
 
 class shopReviewPluginSettingsAction extends waViewAction
 {
-    protected $tmp_path = 'plugins/novelties/templates/Novelties.html';
-    protected $plugin_id = array('shop', 'novelties');
+    protected $tmp_path = 'plugins/review/templates/actions/frontend/Frontend.html';
+    protected $plugin_id = array('shop', 'review');
     
     public function execute()
     {

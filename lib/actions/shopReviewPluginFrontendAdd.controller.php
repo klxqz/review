@@ -1,6 +1,6 @@
 <?php
 
-class shopReviewPluginFrontendAction extends shopFrontendAction {
+class shopReviewPluginFrontendAddController extends waJsonController {
 
     protected $plugin_id = array('shop', 'review');
 
@@ -13,9 +13,16 @@ class shopReviewPluginFrontendAction extends shopFrontendAction {
         $rate = waRequest::post('rate');
         $text = waRequest::post('text');
 
-
-        $this->view->assign('require_authorization', '1');
-        $this->view->assign('is_captcha', '1');
+        $review = array(
+            'contact_id' => $contact_id,
+            'title' => $title,
+            'rate' => $rate,
+            'text' => $text,
+            'date' => waDateTime::date('Y-m-d H:i:s')
+        );
+        
+        $review_model = new shopReviewPluginModel();
+        $review_model->insert($review);
     }
 
 }

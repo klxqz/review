@@ -10,7 +10,7 @@
 </style>
 <h1>Отзывы о магазине</h1>
 <div     class="fields form">
-    <form action="?plugin=novelties&action=save" method="post" id="plugins-settings-form">
+    <form action="?plugin=review&action=save" method="post" id="plugins-settings-form">
     {$wa->csrf()}
     
     
@@ -27,7 +27,7 @@
             Статус
         </div>
         <div class="value">
-            <select name="shop_novelties[status]">
+            <select name="shop_review[status]">
                 <option {if $settings.status == 1} selected="selected"{/if} value="1">Включен</option>
                 <option {if $settings.status == 0} selected="selected"{/if} value="0">Выключен</option>
             </select>
@@ -37,61 +37,39 @@
     
     <div class="field">
         <div class="name">
-            Заголовок страницы
+            URL-адрес страницы с отзывами
         </div>
         <div class="value">
-            <input type="text" name="shop_novelties[page_title]" value="{$settings.page_title|escape}"  />
+            <input type="text" name="shop_review[page_url]" value="{$settings.page_url|escape}"  />
             
         </div>
     </div>
     
     <div class="field">
         <div class="name">
-            Вывод плагина в стандартном месте
+            Использовать защиту от спама(captcha)
         </div>
         <div class="value">
-            <select name="shop_novelties[default_output]">
-                <option {if $settings.default_output == 1} selected="selected"{/if} value="1">Включен</option>
-                <option {if $settings.default_output == 0} selected="selected"{/if} value="0">Выключен</option>
+            <select name="shop_review[is_captcha]">
+                <option {if $settings.is_captcha == 1} selected="selected"{/if} value="1">Да</option>
+                <option {if $settings.is_captcha == 0} selected="selected"{/if} value="0">Нет</option>
             </select>
-            <p class="gray">
-            <i class="icon16 exclamation"></i>
-            Вы можете отключить стандартный вывод, это может быть полезно если вы используете хелпер вывода
-            </p>
         </div>
     </div>
     
-    <div class="field">
-        <div class="name">
-            Количество выводимых товаров
-        </div>
-        <div class="value">
-            <input type="text" name="shop_novelties[count]" value="{$settings.count|escape}"  />
-        </div>
-    </div>
-    
-    <div class="field">
-        <div class="name">
-            Количество дней
-        </div>
-        <div class="value">
-            <input type="text" name="shop_novelties[days]" value="{$settings.days|escape}"  />
-            <p class="hint">Количество дней с момента добавления товара, в течение которых, товар считается новинкой</p>
-        </div>
-    </div>
     
     <div class="field">
         <div class="name">Шаблон<br /><span class="hint">HTML + Smarty</span></div>
         <div class="value no-shift">
             <div id="s-editor-core-wrapper">
-                <textarea id="sf-template" class="body" name="template">{$template}</textarea>
+                <textarea id="sf-template" class="body" name="template">{$template|escape}</textarea>
             </div>
         </div>
         
         {if $change_tpl}
         <div class="value">
             <p class="gray"><i class="icon16 exclamation"></i>Внимание! Шаблон по умолчанию был изменен</p>
-            <input type="checkbox" name="shop_novelties[reset_tpl]" value="1"  /> - Сбросить изменения, использовать шаблон по умолчанию
+            <input type="checkbox" name="shop_review[reset_tpl]" value="1"  /> - Сбросить изменения, использовать шаблон по умолчанию
         </div>
         {/if}
     </div>

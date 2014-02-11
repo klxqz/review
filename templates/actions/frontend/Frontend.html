@@ -1,1 +1,64 @@
-fsdfsdfsdf
+<script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"></script>
+<script type="text/javascript" src="{$wa_app_static_url}plugins/review/js/reviews.js"></script>
+<div class="reviews">
+
+    <a name="reviewheader"></a>
+
+
+    <div class="review-form" id="product-reivew-form">
+
+        {$current_user_id = $wa->userId()}
+
+        <form method="post" action="{$wa_app_url}review/add/">
+            <div class="review-form-fields">
+
+                {if empty($current_user_id) && $require_authorization}
+                <p class="review-field">
+                    Для добавления отзыва, пожалуйста, <a href="{$wa->signupUrl()}">зарегистрируйтесь</a> или <a href="{$wa->loginUrl()}">авторизируйтесь</a>
+                </p>
+                {else}
+
+                <p class="review-field"><label>Ваше имя</label>
+                    <strong><img src="{$wa->user()->getPhoto(20)}" class="userpic" alt="">{$wa->user('name')}</strong>
+                    <a href="?logout">Выйти</a>
+                </p>
+
+                <br>
+                <p class="review-field">
+                    <label for="review-title">Заголовок</label>
+                    <input type="text" name="title" id="review-title" class="bold">
+                </p>
+                <p class="review-field">
+                    <label>Оценка</label>
+                    <a href="#" class="no-underline rate" data-rate="0" id="review-rate">
+                        {for $i = 1 to 5}<i class="icon16 star-empty"></i>{/for}
+                    </a>
+                    <a href="javascript:void(0);" class="inline-link rate-clear" id="clear-review-rate" style="display: none;">
+                        <b><i>Очистить</i></b>
+                    </a>
+                    <input name="rate" type="hidden" value="0">
+                </p>
+                <p class="review-field">
+                    <label for="review-text">Отзыв</label>
+                    <textarea id="review-text" name="text" rows="10" cols="45"></textarea>
+                </p>
+
+                <div class="review-submit">
+                    {if $is_captcha}
+                    {$wa->captcha()}
+                    {/if}
+                    <input type="submit" class="save" value="Добавить отзыв">
+                    <span class="review-add-form-status ajax-status" style="display: none;">
+                        <i class="ajax-statuloading icon16 loading"><!--icon --></i>
+                    </span>
+
+                    <em class="hint">Ctrl+Enter</em>
+                </div>
+                {/if}
+
+            </div>
+        </form>
+    </div>
+
+
+</div>

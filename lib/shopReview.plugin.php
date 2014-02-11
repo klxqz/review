@@ -3,10 +3,10 @@
 class shopReviewPlugin extends shopPlugin {
 
     public function routing($routes) {
+        $url = $this->getSettings('page_url');
         $review_routes = array(
-            'review/' => array(
-                'plugin' => 'review'
-            )
+            $url => 'frontend/',
+            'review/add/' => 'frontend/add/',
         );
         return $review_routes;
     }
