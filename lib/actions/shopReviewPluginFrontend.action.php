@@ -8,14 +8,22 @@ class shopReviewPluginFrontendAction extends shopFrontendAction {
         $app_settings_model = new waAppSettingsModel();
         $settings = $app_settings_model->get($this->plugin_id);
 
-        $contact_id = wa()->getUser()->getId();
-        $title = waRequest::post('title');
-        $rate = waRequest::post('rate');
-        $text = waRequest::post('text');
+        $domain = wa()->getRouting()->getDomain();
+        $reviews_model = new shopReviewPluginModel();
+        $reviews = $reviews_model->getFullTree(
+                $domain, 0, null, 'datetime DESC', array('escape' => true)
+        );
 
+        $config = wa()->getConfig();
 
-        $this->view->assign('require_authorization', '1');
-        $this->view->assign('is_captcha', '1');
+        $this->view->assign(array(
+            'reviews' => $reviews,
+            'reviews_count' => $reviews_model->count($domain, false),
+            'reply_allowed' => true,
+            'auth_adapters' => $adapters = wa()->getAuthAdapters(),
+            'request_captcha' => $config->getGeneralSettings('require_captcha'),
+            'require_authorization' => $config->getGeneralSettings('require_authorization'),
+        ));
     }
 
 }

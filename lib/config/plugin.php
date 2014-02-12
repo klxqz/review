@@ -11,6 +11,7 @@ return array(
     'handlers' => array(
         //'frontend_nav' => 'frontendNav',
         'routing' => 'routing',
+        'backend_menu' => 'backendMenu',
     ),
 );
 //EOF
