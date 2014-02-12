@@ -7,6 +7,7 @@
 class shopReviewPluginBackendReviewsAction extends waViewAction {
 
     public function execute() {
+        $domain = waRequest::get('domain', '', waRequest::TYPE_STRING_TRIM);
         $offset = waRequest::get('offset', 0, waRequest::TYPE_INT);
         $total_count = waRequest::get('total_count', null, waRequest::TYPE_INT);
         $lazy = waRequest::get('lazy', false, waRequest::TYPE_INT);
@@ -14,17 +15,14 @@ class shopReviewPluginBackendReviewsAction extends waViewAction {
         $reivew_model = new shopReviewPluginModel();
         $reviews_per_page = $this->getConfig()->getOption('reviews_per_page_total');
 
-        /*
-          $reviews = $product_reivews_model->getList(
-          $offset,
-          $reviews_per_page,
-          array('is_new' => true)
-          );
-         */
+        $where = array();
+        if ($domain) {
+            $where = array('domain' => 'sub.mir-bruk');
+        }
         $reviews = $reivew_model->getList('*,is_new,contact,domain', array(
             'offset' => $offset,
             'limit' => $reviews_per_page,
-            //'where' => array('domain' => 'sub.mir-bruk')
+            'where' => $where
                 )
         );
 
@@ -32,7 +30,7 @@ class shopReviewPluginBackendReviewsAction extends waViewAction {
 
 
         $this->view->assign(array(
-            'total_count' => $total_count ? $total_count : $reivew_model->count(/*'sub.mir-bruk'*/),
+            'total_count' => $total_count ? $total_count : $reivew_model->count($domain, false),
             'count' => count($reviews),
             'offset' => $offset,
             'reviews' => $reviews,

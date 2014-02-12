@@ -127,6 +127,17 @@
                 //$.review.selectAllInit();
             });
         },
+        
+        reviewsAction: function(attr) {
+            var url = '?plugin=review&action=reviews';
+            if (typeof attr != 'undefined') {
+                url += '&' + attr;
+            }
+            this.load(url,function(){
+                //$.review.deleteSlidersInit();
+                //$.review.selectAllInit();
+            });
+        },
 
 
 
