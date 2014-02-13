@@ -17,7 +17,7 @@ class shopReviewPluginBackendReviewsAction extends waViewAction {
 
         $where = array();
         if ($domain) {
-            $where = array('domain' => 'sub.mir-bruk');
+            $where = array('domain' => $domain);
         }
         $reviews = $reivew_model->getList('*,is_new,contact,domain', array(
             'offset' => $offset,
@@ -27,8 +27,7 @@ class shopReviewPluginBackendReviewsAction extends waViewAction {
         );
 
         // TODO: move to model
-
-
+        $query = waRequest::server('argv');
         $this->view->assign(array(
             'total_count' => $total_count ? $total_count : $reivew_model->count($domain, false),
             'count' => count($reviews),
@@ -39,7 +38,8 @@ class shopReviewPluginBackendReviewsAction extends waViewAction {
             'lazy' => $lazy,
             'sidebar_counters' => array(
                 'new' => $reivew_model->countNew(!$offset)
-            )
+            ),
+            'argv' => $query[0],
         ));
     }
 

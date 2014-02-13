@@ -129,6 +129,7 @@
         },
 
         initLazyLoad: function(options) {
+            
             var count = options.count;
             var offset = count;
             var total_count = options.total_count;

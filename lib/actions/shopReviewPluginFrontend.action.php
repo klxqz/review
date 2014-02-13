@@ -15,15 +15,21 @@ class shopReviewPluginFrontendAction extends shopFrontendAction {
         );
 
         $config = wa()->getConfig();
-
         $this->view->assign(array(
             'reviews' => $reviews,
             'reviews_count' => $reviews_model->count($domain, false),
             'reply_allowed' => true,
             'auth_adapters' => $adapters = wa()->getAuthAdapters(),
-            'request_captcha' => $config->getGeneralSettings('require_captcha'),
-            'require_authorization' => $config->getGeneralSettings('require_authorization'),
+            'request_captcha' => $app_settings_model->get($this->plugin_id, 'request_captcha'),
+            'require_authorization' => $app_settings_model->get($this->plugin_id, 'require_authorization'),
         ));
+        
+        $storage = wa()->getStorage();
+        $current_auth = $storage->read('auth_user_data');
+        $current_auth_source = $current_auth ? $current_auth['source'] : shopProductReviewsModel::AUTH_GUEST;
+
+        $this->view->assign('current_auth_source', $current_auth_source);
+        $this->view->assign('current_auth', $current_auth, true);
     }
 
 }

@@ -74,7 +74,7 @@
                         {else}
                             {if $auth_adapters}
                                 <ul id="user-auth-provider" class="menu-h auth-type">
-                                    <li data-provider="guest"  {if $current_auth_source == shopProductReviewsModel::AUTH_GUEST}class="selected"{/if}><a href="#">[`Guest`]</a></li>
+                                    <li data-provider="guest"  {if $current_auth_source == shopReviewPluginModel::AUTH_GUEST}class="selected"{/if}><a href="#">[`Guest`]</a></li>
                                     {foreach $auth_adapters as $adapter}
                                         {$adapter_id = $adapter->getId()}
                                         <li data-provider="{$adapter_id}" {if $current_auth_source == $adapter_id}class="selected"{/if}>
@@ -132,7 +132,7 @@
                     </p>
                 
                     <div class="review-submit">
-                        {if $request_captcha && empty($current_user_id)}
+                        {if $request_captcha}
                             {$wa->captcha()}
                         {/if}
                         <input type="submit" class="save" value="[`Add review`]">

@@ -11,82 +11,93 @@
 <h1>Отзывы о магазине</h1>
 <div     class="fields form">
     <form action="?plugin=review&action=save" method="post" id="plugins-settings-form">
-    {$wa->csrf()}
-    
-    
-    {literal}
-    <p>{shopNoveltiesPlugin::display()} - Код хелпера вывода</p>
-    {/literal}
-    <p class="gray">
-    <i class="icon16 exclamation"></i>
-    Используя этот код Вы можете осуществить вывод "Новинок" в любом месте вашей темы оформления, это позволяет избавиться от привязки к конкретным местам вывода плагина
-    </p>
-    
-    <div class="field">
-        <div class="name">
-            Статус
-        </div>
-        <div class="value">
-            <select name="shop_review[status]">
-                <option {if $settings.status == 1} selected="selected"{/if} value="1">Включен</option>
-                <option {if $settings.status == 0} selected="selected"{/if} value="0">Выключен</option>
-            </select>
-        </div>
-    </div>
+        {$wa->csrf()}
 
-    
-    <div class="field">
-        <div class="name">
-            URL-адрес страницы с отзывами
+
+        {literal}
+        <p>{shopNoveltiesPlugin::display()} - Код хелпера вывода</p>
+        {/literal}
+        <p class="gray">
+            <i class="icon16 exclamation"></i>
+            Используя этот код Вы можете осуществить вывод "Новинок" в любом месте вашей темы оформления, это позволяет избавиться от привязки к конкретным местам вывода плагина
+        </p>
+
+        <div class="field">
+            <div class="name">
+                Статус плагина
+            </div>
+            <div class="value">
+                <select name="shop_review[status]">
+                    <option {if $settings.status == 1} selected="selected"{/if} value="1">Включен</option>
+                    <option {if $settings.status == 0} selected="selected"{/if} value="0">Выключен</option>
+                </select>
+            </div>
         </div>
-        <div class="value">
-            <input type="text" name="shop_review[page_url]" value="{$settings.page_url|escape}"  />
-            
+
+        <div class="field">
+            <div class="name">
+                URL-адрес страницы с отзывами
+            </div>
+            <div class="value">
+                <input type="text" name="shop_review[page_url]" value="{$settings.page_url|escape}"  /> 
+            </div>
         </div>
-    </div>
-    
-    <div class="field">
-        <div class="name">
-            Использовать защиту от спама(captcha)
-        </div>
-        <div class="value">
-            <select name="shop_review[is_captcha]">
-                <option {if $settings.is_captcha == 1} selected="selected"{/if} value="1">Да</option>
-                <option {if $settings.is_captcha == 0} selected="selected"{/if} value="0">Нет</option>
-            </select>
-        </div>
-    </div>
-    
-    
-    <div class="field">
-        <div class="name">Шаблон<br /><span class="hint">HTML + Smarty</span></div>
-        <div class="value no-shift">
-            <div id="s-editor-core-wrapper">
-                <textarea id="sf-template" class="body" name="template">{$template|escape}</textarea>
+
+
+        <div class="field">
+            <div class="name">
+                Использовать защиту от спама(captcha)
+            </div>
+            <div class="value">
+                <select name="shop_review[request_captcha]">
+                    <option {if $settings.request_captcha == 1} selected="selected"{/if} value="1">Да</option>
+                    <option {if $settings.request_captcha == 0} selected="selected"{/if} value="0">Нет</option>
+                </select>
             </div>
         </div>
         
-        {if $change_tpl}
-        <div class="value">
-            <p class="gray"><i class="icon16 exclamation"></i>Внимание! Шаблон по умолчанию был изменен</p>
-            <input type="checkbox" name="shop_review[reset_tpl]" value="1"  /> - Сбросить изменения, использовать шаблон по умолчанию
+        <div class="field">
+            <div class="name">
+                Запрашивать авторизацию
+            </div>
+            <div class="value">
+                <select name="shop_review[require_authorization]">
+                    <option {if $settings.require_authorization == 1} selected="selected"{/if} value="1">Да</option>
+                    <option {if $settings.require_authorization == 0} selected="selected"{/if} value="0">Нет</option>
+                </select>
+            </div>
         </div>
-        {/if}
-    </div>
 
 
-    <div class="field">
-        <div class="value submit">
-            <input type="submit" class="button green" value="Сохранить">
-            <span id="plugins-settings-form-status" style="display:none">
-                <i style="vertical-align:middle" class="icon16 yes"></i> [`Saved`]
-            </span>
+        <div class="field">
+            <div class="name">Шаблон<br /><span class="hint">HTML + Smarty</span></div>
+            <div class="value no-shift">
+                <div id="s-editor-core-wrapper">
+                    <textarea id="sf-template" class="body" name="template">{$template|escape}</textarea>
+                </div>
+            </div>
+
+            {if $change_tpl}
+            <div class="value">
+                <p class="gray"><i class="icon16 exclamation"></i>Внимание! Шаблон по умолчанию был изменен</p>
+                <input type="checkbox" name="shop_review[reset_tpl]" value="1"  /> - Сбросить изменения, использовать шаблон по умолчанию
+            </div>
+            {/if}
         </div>
-    </div>
+
+
+        <div class="field">
+            <div class="value submit">
+                <input type="submit" class="button green" value="Сохранить">
+                <span id="plugins-settings-form-status" style="display:none">
+                    <i style="vertical-align:middle" class="icon16 yes"></i> [`Saved`]
+                </span>
+            </div>
+        </div>
     </form>
 </div>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         var c = CodeMirror.fromTextArea(document.getElementById('sf-template'), {
             mode: "text/html",
             tabMode: "indent",
@@ -96,14 +107,14 @@
         $("#sf-template").change(function() {
             c.setValue($(this).val())
         });
-        $("#sf-settings").submit(function () {
+        $("#sf-settings").submit(function() {
             var f = $(this);
-            $.post(f.attr('action'), f.serialize(), function (response) {
-                if(response.status == 'ok') {
+            $.post(f.attr('action'), f.serialize(), function(response) {
+                if (response.status == 'ok') {
                     $('#wa-design-button').removeClass('red').addClass('green');
                     $("#wa-editor-status-fail").hide()
                     $("#wa-editor-status-ok span").html(response.data.message);
-                    $("#wa-editor-status-ok").fadeIn('slow', function () {
+                    $("#wa-editor-status-ok").fadeIn('slow', function() {
                         $(this).fadeOut(1000);
                     });
                 } else {
